@@ -2,6 +2,7 @@
 
 
 #include "OpenDoor.h"
+#include "Components/PrimitiveComponent.h"
 
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
@@ -30,6 +31,12 @@ void UOpenDoor::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("No OpenDorr Trigger set"))
 	}
+
+	OpenDoorSound = GetOwner()->FindComponentByClass<UAudioComponent>();
+	if (!OpenDoorSound)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Can't find Open Door Sound!"))
+	}
 }
 
 
@@ -40,8 +47,9 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	if (TriggerVolume)
 	{
-		if (TriggerVolume->IsOverlappingActor(ActorThatCanOpen))
+		if (TriggerVolume->IsOverlappingActor(ActorThatCanOpen) || GetTotalMessOfActors() >= TriggerMass)
 		{
+			PlayOpenDoorSound();
 			OpenDoor(DeltaTime);
 			Timer = DoorCloseDelay;
 		}
@@ -51,12 +59,11 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 			if (Timer <= 0)
 			{
 				CloseDoor(DeltaTime);
+				PlayOpenDoorSound();
 			}
             
 		}
 	}
-    
-     
 }
 
 
@@ -73,4 +80,33 @@ void UOpenDoor::CloseDoor(float DeltaTime)
 	CurrentRotation.Yaw = FMath::Lerp(CurrentRotation.Yaw, StartRotationYaw, DoorOpenCloseSpeed * DeltaTime);
 	GetOwner()-> SetActorRotation(CurrentRotation);
 }
+
+float UOpenDoor::GetTotalMessOfActors()
+{
+	float TotalMass = 0.f;
+	TArray<AActor*> OverlappingActors;
+	TriggerVolume->GetOverlappingActors(OUT OverlappingActors);
+
+	for (AActor* Actor: OverlappingActors)
+	{
+		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Mass: %f"), TotalMass);
+	return TotalMass;
+}
+
+void UOpenDoor::PlayOpenDoorSound()
+{
+	if (OpenDoorSound)
+	{
+		OpenDoorSound->Play();
+		
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Keine Sound Datei gesetzt, kann nichts abspielen!!!"))
+	}
+}
+
+
 

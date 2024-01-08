@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Engine/TriggerVolume.h"
+#include "Components/AudioComponent.h"
 #include "OpenDoor.generated.h"
 
 
@@ -38,8 +39,19 @@ public:
 	UPROPERTY(EditAnywhere, Category="Door Trigger")
 	float DoorCloseDelay = 1.f;
 
+	UPROPERTY(EditAnywhere, Category="Door Trigger")
+	float TriggerMass = 50.f;
+
 	void OpenDoor(float DeltaTime);
 	void CloseDoor(float DeltaTime);
+
+private:
+	float GetTotalMessOfActors();
+
+	UAudioComponent* OpenDoorSound;
+
+	void PlayOpenDoorSound();
+
 
 protected:
 	// Called when the game starts

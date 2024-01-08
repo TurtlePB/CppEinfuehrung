@@ -23,7 +23,14 @@ public:
 	UInputComponent* MyInputComponent = nullptr;
 
 	void Grab();
+	void GrabRelease();
 
+private:
+	void SetupInputComponents();
+
+	FVector GetEndLineTrace();
+	FVector GetPlayerViewPointLocationStart();
+	
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
