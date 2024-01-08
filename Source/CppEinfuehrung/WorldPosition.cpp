@@ -22,8 +22,8 @@ void UWorldPosition::BeginPlay()
 
 	// ...
 	
-	UE_LOG(LogTemp, Warning, TEXT("Mein Begin Play Klappt"));
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, TEXT("Jo Was Geht!!"));
+	//UE_LOG(LogTemp, Warning, TEXT("Mein Begin Play Klappt"));
+	//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, TEXT("Jo Was Geht!!"));
 }
 
 
