@@ -109,7 +109,7 @@ void UGrabber::Grab()
 		if (ActorHit)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Name : %s"), *(ActorHit->GetName()));
-			MyPhysicsHandle->GrabComponentAtLocation(Hit.GetComponent(), NAME_None, GetEndLineTrace());
+			MyPhysicsHandle->GrabComponentAtLocation(Hit.GetComponent(), NAME_None, Hit.Location);
 		}
 	}
 }

@@ -91,7 +91,7 @@ float UOpenDoor::GetTotalMessOfActors()
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Mass: %f"), TotalMass);
+	//UE_LOG(LogTemp, Warning, TEXT("Mass: %f"), TotalMass);
 	return TotalMass;
 }
 
