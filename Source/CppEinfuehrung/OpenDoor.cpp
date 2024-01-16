@@ -29,7 +29,7 @@ void UOpenDoor::BeginPlay()
 
 	if (!TriggerVolume)
 	{
-		UE_LOG(LogTemp, Error, TEXT("No OpenDorr Trigger set"))
+		UE_LOG(LogTemp, Error, TEXT("No OpenDorr Trigger set"));
 	}
 
 	OpenDoorSound = GetOwner()->FindComponentByClass<UAudioComponent>();
