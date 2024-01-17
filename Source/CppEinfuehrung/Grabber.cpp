@@ -112,16 +112,8 @@ void UGrabber::Grab()
 			Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>()->GetBodyInstance()->bLockZRotation= true;
 			Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>()->GetBodyInstance()->bLockYRotation= true;
 			Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>()->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
-
-			/*Hit.GetComponent()->GetBodyInstance()->bLockXRotation= true;
-			Hit.GetComponent()->GetBodyInstance()->bLockYRotation= true;
-			Hit.GetComponent()->GetBodyInstance()->bLockZRotation= true;*/
 			
-			/*Hit.GetComponent()->BodyInstance.bLockRotation = true;
-			Hit.GetComponent()->BodyInstance.SetDOFLock(EDOFMode::SixDOF);*/
 			MyPhysicsHandle->GrabComponentAtLocation(Hit.GetComponent(), NAME_None, Hit.Location);
-			//FRotator HoldRotation = MyPhysicsHandle->GrabbedComponent->GetRelativeRotation();
-			//MyPhysicsHandle->GrabbedComponent->SetRelativeRotation(HoldRotation);
 		}
 	}
 }
@@ -132,6 +124,10 @@ void UGrabber::GrabRelease()
 	UE_LOG(LogTemp, Warning, TEXT("Released!"));
 	if (MyPhysicsHandle->GrabbedComponent)
 	{
+		MyPhysicsHandle->GrabbedComponent->GetBodyInstance()->bLockXRotation = false;
+		MyPhysicsHandle->GrabbedComponent->GetBodyInstance()->bLockZRotation = false;
+		MyPhysicsHandle->GrabbedComponent->GetBodyInstance()->bLockYRotation = false;
+		MyPhysicsHandle->GrabbedComponent->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
 		MyPhysicsHandle->ReleaseComponent();
 	}
 }
