@@ -22,7 +22,8 @@ void UTransporter::BeginPlay()
 
 	if (!TriggerVolume)
 	{
-		UE_LOG(LogTemp, Error, TEXT("No OpenDorr Trigger set"));
+		UE_LOG(LogTemp, Error, TEXT("No Transporter Trigger set"));
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("No Transporter Trigger set"));
 	}
 	
 }
