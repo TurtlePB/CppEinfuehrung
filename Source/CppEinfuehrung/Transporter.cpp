@@ -54,7 +54,7 @@ float UTransporter::GetTotalMass()
 	{
 		totalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Mass: %f"), totalMass);
+	//UE_LOG(LogTemp, Warning, TEXT("Mass: %f"), totalMass);
 	return totalMass;
 }
 

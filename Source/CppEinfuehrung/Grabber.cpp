@@ -2,6 +2,7 @@
 
 
 #include "Grabber.h"
+#include "PhysicsEngine/BodyInstance.h"
 #include "GameFramework/PlayerController.h"
 
 // Sets default values for this component's properties
@@ -103,13 +104,24 @@ void UGrabber::Grab()
 		FHitResult Hit;
 		FCollisionQueryParams TraceParams(FName(TEXT("")),false, GetOwner());
 		GetWorld()->LineTraceSingleByObjectType(OUT Hit, GetPlayerViewPointLocationStart(), GetEndLineTrace(), FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody), TraceParams);
+	
 
-
-		AActor * ActorHit = Hit.GetActor();
-		if (ActorHit)
+		if (Hit.GetActor())
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Name : %s"), *(ActorHit->GetName()));
+			Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>()->GetBodyInstance()->bLockXRotation= true;
+			Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>()->GetBodyInstance()->bLockZRotation= true;
+			Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>()->GetBodyInstance()->bLockYRotation= true;
+			Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>()->GetBodyInstance()->SetDOFLock(EDOFMode::SixDOF);
+
+			/*Hit.GetComponent()->GetBodyInstance()->bLockXRotation= true;
+			Hit.GetComponent()->GetBodyInstance()->bLockYRotation= true;
+			Hit.GetComponent()->GetBodyInstance()->bLockZRotation= true;*/
+			
+			/*Hit.GetComponent()->BodyInstance.bLockRotation = true;
+			Hit.GetComponent()->BodyInstance.SetDOFLock(EDOFMode::SixDOF);*/
 			MyPhysicsHandle->GrabComponentAtLocation(Hit.GetComponent(), NAME_None, Hit.Location);
+			//FRotator HoldRotation = MyPhysicsHandle->GrabbedComponent->GetRelativeRotation();
+			//MyPhysicsHandle->GrabbedComponent->SetRelativeRotation(HoldRotation);
 		}
 	}
 }
