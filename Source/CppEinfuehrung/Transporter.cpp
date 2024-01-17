@@ -38,6 +38,7 @@ void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	{
 		if (GetTotalMass() >= RequiredMass)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Required mass achieved!"));
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("Required mass achieved!"));
 		}
 	}
@@ -45,7 +46,7 @@ void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 
 float UTransporter::GetTotalMass()
 {
-	float totalMass = 0;
+	float totalMass = 0.f;
 	TArray<AActor*> OverlappingActors;
 	TriggerVolume->GetOverlappingActors(OUT OverlappingActors);
 	
@@ -53,6 +54,7 @@ float UTransporter::GetTotalMass()
 	{
 		totalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
+	UE_LOG(LogTemp, Warning, TEXT("Mass: %f"), totalMass);
 	return totalMass;
 }
 
