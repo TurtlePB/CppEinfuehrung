@@ -47,7 +47,7 @@ void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	}
 }
 
-void UTransporter::GetOrderText()
+void UTransporter::SetOrderText()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Fuck you!"))
 }

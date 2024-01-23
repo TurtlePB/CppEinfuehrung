@@ -30,7 +30,7 @@ public:
 	float RequiredMass;
 
 	UFUNCTION(BlueprintCallable, Category = "Blackboard")
-	void GetOrderText();
+	void SetOrderText();
 	
 private:
 	float GetTotalMass();
