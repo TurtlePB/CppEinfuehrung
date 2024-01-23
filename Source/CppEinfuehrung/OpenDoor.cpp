@@ -35,7 +35,7 @@ void UOpenDoor::BeginPlay()
 	OpenDoorSound = GetOwner()->FindComponentByClass<UAudioComponent>();
 	if (!OpenDoorSound)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Can't find Open Door Sound!"))
+		UE_LOG(LogTemp, Warning, TEXT("Can't find Open Door Sound!"));
 	}
 }
 

@@ -10,10 +10,7 @@ UTransporter::UTransporter()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
-
 
 // Called when the game starts
 void UTransporter::BeginPlay()
@@ -24,6 +21,12 @@ void UTransporter::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("No Transporter Trigger set"));
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("No Transporter Trigger set"));
+	}
+
+	if (!BlackBoard)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Blackboard set"));
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("No Blackboard set"));
 	}
 	
 }
@@ -44,7 +47,12 @@ void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	}
 }
 
-float UTransporter::GetTotalMass()
+void UTransporter::GetOrderText()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fuck you!"))
+}
+
+ float UTransporter::GetTotalMass()
 {
 	float totalMass = 0.f;
 	TArray<AActor*> OverlappingActors;

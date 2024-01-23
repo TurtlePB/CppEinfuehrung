@@ -21,10 +21,16 @@ public:
 	ATriggerVolume* TriggerVolume;
 
 	UPROPERTY(EditAnywhere, Category = "Transporter")
+	AActor* BlackBoard;
+
+	UPROPERTY(EditAnywhere, Category = "Transporter")
 	float TriggerMass;
 
 	UPROPERTY(EditAnywhere, Category = "Transporter")
 	float RequiredMass;
+
+	UFUNCTION(BlueprintCallable, Category = "Blackboard")
+	void GetOrderText();
 	
 private:
 	float GetTotalMass();
