@@ -12,7 +12,6 @@ ABoxCounter::ABoxCounter()
 	if (!TriggerVolume)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No boxCounter Trigger set"));
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Green, TEXT("No BoxCounter Trigger set"));
 	}
 	
 }
@@ -32,8 +31,8 @@ void ABoxCounter::Tick(float DeltaTime)
 	if (TriggerVolume)
 	{
 		TArray<AActor*> OverlappingActors;
-		TriggerVolume->GetOverlappingActors(OUT OverlappingActors);
-		if (OverlappingActors.Num() == 0)
+		TriggerVolume->GetOverlappingActors(OverlappingActors);
+		if (OverlappingActors.IsEmpty() == true)
 		{
 			UE_LOG(LogTemp, Error, TEXT("HELP!!!!!!!!!!!!!!!!!!!!!!!!!!!"));
 		}
