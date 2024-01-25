@@ -2,8 +2,7 @@
 
 
 #include "Transporter.h"
-
-#include "BlackBoard.h"
+#include "Math/UnrealMathUtility.h"
 #include "Components/PrimitiveComponent.h"
 
 // Sets default values for this component's properties
@@ -19,6 +18,8 @@ void UTransporter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetRandomNumber();
+	
 	if (!TriggerVolume)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No Transporter Trigger set"));
@@ -33,6 +34,13 @@ void UTransporter::BeginPlay()
 	
 }
 
+void UTransporter::GetRandomNumber()
+{
+	RequiredMass =  FMath::RandRange(125.f, 250.f);
+	UE_LOG(LogTemp, Error, TEXT("RequiredMass: %f"), RequiredMass);
+}
+
+
 
 // Called every frame
 void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -43,7 +51,14 @@ void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	{
 		if (GetTotalMass() >= RequiredMass)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Required mass achieved!"));
+			//UE_LOG(LogTemp, Warning, TEXT("Required mass achieved!"));
+			TArray<AActor*> OverlappingActors;
+			TriggerVolume->GetOverlappingActors(OverlappingActors);
+			for (AActor* Actor: OverlappingActors)
+			{
+				Actor->Destroy();
+			}
+			GetRandomNumber();
 		}
 	}
 }
@@ -58,16 +73,9 @@ void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("total Mass: %f"), TotalMass)
+	UE_LOG(LogTemp, Warning, TEXT("total Mass: %f"), TotalMass)
 	return TotalMass;
 }
 
-void UTransporter::GetText()
-{
-	UBlackBoard* BlackBoardComponent = BlackBoard->FindComponentByClass<UBlackBoard>();
-
-	BlackBoardComponent->totalMassText = GetTotalMass();
-	BlackBoardComponent->requiredMassText = RequiredMass;
-}
 
 
