@@ -4,34 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Engine/TriggerVolume.h"
-#include "Transporter.generated.h"
+#include "BlackBoard.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CPPEINFUEHRUNG_API UTransporter : public UActorComponent
+class CPPEINFUEHRUNG_API UBlackBoard : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UTransporter();
+	UBlackBoard();
 
-	UPROPERTY(EditAnywhere, Category = "Transporter")
-	ATriggerVolume* TriggerVolume;
+	UPROPERTY(BlueprintReadOnly, Category = "BlackBoard")
+	float totalMassText;
 
-	UPROPERTY(EditAnywhere, Category = "Transporter")
-	AActor* BlackBoard;
-
-	UPROPERTY(EditAnywhere, Category = "Transporter")
-	float TriggerMass;
-
-	UPROPERTY(EditAnywhere, Category = "Transporter")
-	float RequiredMass = 20;
-	
-private:
-	float GetTotalMass();
-	void GetText();
+	UPROPERTY(BlueprintReadOnly, Category = "BlackBoard")
+	float requiredMassText;
 
 protected:
 	// Called when the game starts

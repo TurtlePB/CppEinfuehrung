@@ -2,6 +2,8 @@
 
 
 #include "Transporter.h"
+
+#include "BlackBoard.h"
 #include "Components/PrimitiveComponent.h"
 
 // Sets default values for this component's properties
@@ -36,34 +38,36 @@ void UTransporter::BeginPlay()
 void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	
 	if (TriggerVolume)
 	{
 		if (GetTotalMass() >= RequiredMass)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Required mass achieved!"));
-			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("Required mass achieved!"));
 		}
 	}
 }
 
-void UTransporter::SetOrderText()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Fuck you!"))
-}
-
  float UTransporter::GetTotalMass()
 {
-	float totalMass = 0.f;
+	float TotalMass = 0.f;
 	TArray<AActor*> OverlappingActors;
 	TriggerVolume->GetOverlappingActors(OUT OverlappingActors);
-	
+
 	for (AActor* Actor: OverlappingActors)
 	{
-		totalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("Mass: %f"), totalMass);
-	return totalMass;
+	//UE_LOG(LogTemp, Warning, TEXT("total Mass: %f"), TotalMass)
+	return TotalMass;
+}
+
+void UTransporter::GetText()
+{
+	UBlackBoard* BlackBoardComponent = BlackBoard->FindComponentByClass<UBlackBoard>();
+
+	BlackBoardComponent->totalMassText = GetTotalMass();
+	BlackBoardComponent->requiredMassText = RequiredMass;
 }
 
 
